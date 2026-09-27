@@ -1,0 +1,30 @@
+{
+  "name": "student-opportunity-backend",
+  "version": "1.0.0",
+  "description": "A beginner-friendly Express.js MVC backend for a student opportunity recommendation platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test_e2e.js"
+  },
+  "keywords": [
+    "express",
+    "mvc",
+    "backend",
+    "hackathon",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.20.0",
+    "bcryptjs": "^3.0.3",
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.0"
+  }
+}
