@@ -116,6 +116,7 @@ function App() {
   const [authEmail, setAuthEmail] = useState("");
   const [authPassword, setAuthPassword] = useState("");
   const [authName, setAuthName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Add Opportunity State
   const [oppUrl, setOppUrl] = useState("");
@@ -518,90 +519,116 @@ function App() {
       : 0;
 
   return (
-    <div>
-      {/* NAVBAR */}
-      <header className="navbar">
-        <div className="logo-container" onClick={() => setActiveTab("dashboard")}>
-          <div className="logo-icon">🚀</div>
-          <span className="logo-text">OpportunityAI</span>
+    <div className="app-layout">
+      {/* LEFT SIDEBAR NAVIGATION */}
+      <aside className="app-sidebar">
+        <div className="sidebar-top">
+          <div className="sidebar-logo" onClick={() => setActiveTab("dashboard")}>
+            <div className="logo-icon">🚀</div>
+            <span className="logo-text">OpportunityAI</span>
+          </div>
+
+          <nav className="sidebar-nav">
+            <button
+              className={`nav-btn ${activeTab === "dashboard" ? "active" : ""}`}
+              onClick={() => setActiveTab("dashboard")}
+            >
+              <span>📊</span>
+              <span>Dashboard</span>
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "opportunities" ? "active" : ""}`}
+              onClick={() => setActiveTab("opportunities")}
+            >
+              <span>🎯</span>
+              <span>Opportunities</span>
+              {opportunities.length > 0 && <span className="nav-badge">{opportunities.length}</span>}
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "discover" ? "active" : ""}`}
+              onClick={() => setActiveTab("discover")}
+            >
+              <span>💡</span>
+              <span>Discover Scholarships</span>
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "recommendations" ? "active" : ""}`}
+              onClick={() => setActiveTab("recommendations")}
+            >
+              <span>✨</span>
+              <span>AI Matches</span>
+              {recommendations.length > 0 && <span className="nav-badge">{recommendations.length}</span>}
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "summary" ? "active" : ""}`}
+              onClick={() => setActiveTab("summary")}
+            >
+              <span>📈</span>
+              <span>Ability Summary</span>
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "profile" ? "active" : ""}`}
+              onClick={() => setActiveTab("profile")}
+            >
+              <span>👤</span>
+              <span>Student Profile</span>
+            </button>
+
+            <button
+              className={`nav-btn ${activeTab === "add-opportunity" ? "active" : ""}`}
+              onClick={() => setActiveTab("add-opportunity")}
+            >
+              <span>➕</span>
+              <span>Add URL</span>
+            </button>
+          </nav>
         </div>
 
-        <nav className="nav-links">
-          <button
-            className={`nav-btn ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
-          >
-            📊 Dashboard
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "opportunities" ? "active" : ""}`}
-            onClick={() => setActiveTab("opportunities")}
-          >
-            🎯 Opportunities ({opportunities.length})
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "discover" ? "active" : ""}`}
-            onClick={() => setActiveTab("discover")}
-          >
-            💡 Discover Scholarships
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "recommendations" ? "active" : ""}`}
-            onClick={() => setActiveTab("recommendations")}
-          >
-            ✨ AI Matches ({recommendations.length})
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "summary" ? "active" : ""}`}
-            onClick={() => setActiveTab("summary")}
-          >
-            📈 Ability & Preparedness
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "profile" ? "active" : ""}`}
-            onClick={() => setActiveTab("profile")}
-          >
-            👤 Profile
-          </button>
-          <button
-            className={`nav-btn ${activeTab === "add-opportunity" ? "active" : ""}`}
-            onClick={() => setActiveTab("add-opportunity")}
-          >
-            ➕ Add URL
-          </button>
-
+        <div className="sidebar-bottom">
           {/* THEME SWITCHER */}
-          <select
-            className="form-select"
-            style={{ width: "auto", padding: "6px 10px", fontSize: "12px", cursor: "pointer" }}
-            value={currentTheme}
-            onChange={(e) => setCurrentTheme(e.target.value)}
-          >
-            <option value="theme-dark">🌙 Cyberpunk Dark</option>
-            <option value="theme-ocean">🌊 Deep Ocean</option>
-            <option value="theme-emerald">🌲 Emerald Forest</option>
-            <option value="theme-purple">🔮 Sunset Purple</option>
-            <option value="theme-light">☀️ Clean Light</option>
-          </select>
+          <div className="form-group" style={{ marginBottom: "8px" }}>
+            <label className="form-label" style={{ fontSize: "11px", marginBottom: "4px" }}>
+              🎨 Select Theme
+            </label>
+            <select
+              className="form-select"
+              style={{ padding: "8px 10px", fontSize: "12px", cursor: "pointer" }}
+              value={currentTheme}
+              onChange={(e) => setCurrentTheme(e.target.value)}
+            >
+              <option value="theme-dark">🌙 Cyberpunk Dark</option>
+              <option value="theme-ocean">🌊 Deep Ocean</option>
+              <option value="theme-emerald">🌲 Emerald Forest</option>
+              <option value="theme-purple">🔮 Sunset Purple</option>
+              <option value="theme-light">☀️ Clean Light</option>
+            </select>
+          </div>
 
           {user ? (
-            <div className="user-badge">
-              <div className="user-avatar">{user.name ? user.name.charAt(0) : "S"}</div>
-              <span>{user.name}</span>
-              <button className="btn btn-sm btn-danger" onClick={handleLogout} style={{ marginLeft: "6px" }}>
+            <div className="user-badge" style={{ justifyContent: "space-between", width: "100%", padding: "8px 10px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", overflow: "hidden" }}>
+                <div className="user-avatar">{user.name ? user.name.charAt(0) : "S"}</div>
+                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontSize: "12px" }}>{user.name}</span>
+              </div>
+              <button className="btn btn-sm btn-danger" onClick={handleLogout} style={{ padding: "4px 8px", fontSize: "11px" }}>
                 Logout
               </button>
             </div>
           ) : (
-            <button className="btn btn-primary btn-sm" onClick={() => setActiveTab("auth")}>
+            <button className="btn btn-primary" style={{ width: "100%" }} onClick={() => setActiveTab("auth")}>
               Sign In
             </button>
           )}
-        </nav>
-      </header>
+        </div>
+      </aside>
 
       {/* MAIN CONTENT AREA */}
-      <main className="container">
+      <main className="app-main-content">
         {/* TAB 1: DASHBOARD */}
         {activeTab === "dashboard" && (
           <div>
@@ -1141,8 +1168,22 @@ function App() {
                         </p>
                       </div>
 
-                      <div style={{ marginTop: "16px", display: "flex", justifyContent: "flex-end" }}>
-                        <button className="btn btn-sm btn-secondary" onClick={() => setSelectedRec(rec)}>
+                      <div style={{ marginTop: "16px", display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                        {(() => {
+                          const matchingOpp = opportunities.find((o) => o.id === (rec.opportunity_id || rec.opportunityId));
+                          return matchingOpp ? (
+                            <a
+                              href={ensureAbsoluteUrl(matchingOpp.url)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-sm btn-secondary"
+                              style={{ textDecoration: "none" }}
+                            >
+                              🔗 Website Link
+                            </a>
+                          ) : null;
+                        })()}
+                        <button className="btn btn-sm btn-primary" onClick={() => setSelectedRec(rec)}>
                           💬 View Details & Give Feedback
                         </button>
                       </div>
@@ -1474,14 +1515,40 @@ function App() {
 
               <div className="form-group">
                 <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  required
-                  className="form-input"
-                  value={authPassword}
-                  onChange={(e) => setAuthPassword(e.target.value)}
-                  placeholder="At least 6 characters"
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    className="form-input"
+                    value={authPassword}
+                    onChange={(e) => setAuthPassword(e.target.value)}
+                    placeholder="At least 6 characters"
+                    style={{ paddingRight: "44px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    title={showPassword ? "Hide Password" : "Show Password"}
+                    aria-label="Toggle password visibility"
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      color: "var(--text-muted)",
+                      cursor: "pointer",
+                      fontSize: "18px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "4px"
+                    }}
+                  >
+                    {showPassword ? "👁️" : "🙈"}
+                  </button>
+                </div>
               </div>
 
               <button type="submit" className="btn btn-primary" style={{ width: "100%", marginBottom: "16px" }} disabled={loading}>
@@ -1523,7 +1590,23 @@ function App() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
               <div>
                 <h2 style={{ fontSize: "20px", fontWeight: "700" }}>{selectedRec.title}</h2>
-                <div style={{ color: "#a5b4fc", fontSize: "14px" }}>Detailed Compatibility Report</div>
+                <div style={{ color: "#a5b4fc", fontSize: "14px", display: "flex", alignItems: "center", gap: "10px", marginTop: "4px" }}>
+                  <span>Detailed Compatibility Report</span>
+                  {(() => {
+                    const selOpp = opportunities.find((o) => o.id === (selectedRec.opportunity_id || selectedRec.opportunityId));
+                    return selOpp ? (
+                      <a
+                        href={ensureAbsoluteUrl(selOpp.url)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-sm btn-secondary"
+                        style={{ padding: "2px 8px", fontSize: "12px", textDecoration: "none" }}
+                      >
+                        🔗 Visit Website
+                      </a>
+                    ) : null;
+                  })()}
+                </div>
               </div>
               <button
                 onClick={() => setSelectedRec(null)}
