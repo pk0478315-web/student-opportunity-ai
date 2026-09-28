@@ -42,7 +42,7 @@ const initialData = {
       id: 1,
       email: "alex.rivera@example.edu",
       // default demo password hash for: Password123!
-      password_hash: "$2a$10$wTkyr1XN8rJ6W8bL1K68U.mGv72rFj9sO6v3y7T1x5hN.1kG79e7e",
+      password_hash: "$2b$10$gZgqFCMj07xlG26qDN9H2ugx1A89aRWMqWsLvB.zH7lYaoc9EtUN2",
       name: "Alex Rivera",
       created_at: new Date().toISOString()
     }
