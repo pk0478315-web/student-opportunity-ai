@@ -55,6 +55,20 @@
       "password_hash": "$2b$10$u8carTUI1S7VjkZY5fYG0OKTXfCaB3ceviEzOO1ky9kFwAWNw9Op2",
       "name": "Devon Vance",
       "created_at": "2026-09-27T18:43:45.620Z"
+    },
+    {
+      "id": 9,
+      "email": "tester_1790574252561@hackathon.edu",
+      "password_hash": "$2b$10$HpU4Om78I9PcLKvSg2GqmOGkfLSiFCE2g5ZxBv7EwhKF/snc.2.8i",
+      "name": "Devon Vance",
+      "created_at": "2026-09-28T05:44:12.677Z"
+    },
+    {
+      "id": 10,
+      "email": "tester_1790575827789@hackathon.edu",
+      "password_hash": "$2b$10$UUIzxoHmqRcGWB51Pfiune3rjtNFSnFmWqaaOa0NPGBh5GI6RlGOe",
+      "name": "Devon Vance",
+      "created_at": "2026-09-28T06:10:27.848Z"
     }
   ],
   "profiles": [
@@ -233,6 +247,50 @@
       "location": "Remote / Hybrid",
       "preferred_opportunity_types": [],
       "updated_at": "2026-09-27T18:43:45.683Z"
+    },
+    {
+      "id": 9,
+      "user_id": 9,
+      "name": "Devon Vance",
+      "education": "B.Tech Computer Science, 3rd Year",
+      "skills": [
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js"
+      ],
+      "interests": [
+        "AI",
+        "Open Source",
+        "Autonomous Vehicles"
+      ],
+      "career_goals": "Full-Stack AI Engineer",
+      "experience": "",
+      "location": "Remote / Hybrid",
+      "preferred_opportunity_types": [],
+      "updated_at": "2026-09-28T05:44:12.743Z"
+    },
+    {
+      "id": 10,
+      "user_id": 10,
+      "name": "Devon Vance",
+      "education": "B.Tech Computer Science, 3rd Year",
+      "skills": [
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js"
+      ],
+      "interests": [
+        "AI",
+        "Open Source",
+        "Autonomous Vehicles"
+      ],
+      "career_goals": "Full-Stack AI Engineer",
+      "experience": "",
+      "location": "Remote / Hybrid",
+      "preferred_opportunity_types": [],
+      "updated_at": "2026-09-28T06:10:27.908Z"
     }
   ],
   "opportunities": [
@@ -465,6 +523,105 @@
         "Opportunity"
       ],
       "created_at": "2026-09-27T18:43:46.891Z"
+    },
+    {
+      "id": 11,
+      "user_id": 9,
+      "title": "Google Summer of Code Open Source Contributor",
+      "url": "https://summerofcode.withgoogle.com",
+      "organization": "Google Open Source",
+      "description": "Google Summer of Code is a global program focused on bringing more developers into open source software development.",
+      "requirements": "See opportunity link for full prerequisites and requirements.",
+      "required_skills": [
+        "Python",
+        "JavaScript",
+        "Git",
+        "Open Source"
+      ],
+      "eligibility": "Open to eligible students and early-career candidates.",
+      "location": "Remote / Online",
+      "deadline": "Rolling / Check source link",
+      "opportunity_type": "Opportunity",
+      "tags": [
+        "Opportunity"
+      ],
+      "created_at": "2026-09-28T05:44:13.886Z"
+    },
+    {
+      "id": 12,
+      "user_id": 5,
+      "title": "Google Generation Scholarship (APAC)",
+      "url": "https://buildyourfuture.withgoogle.com/scholarships/generation-google-scholarship-apac",
+      "organization": "Google Education",
+      "description": "Designed to help computer science students excel in technology and become leaders in the field ($2,500 USD award + mentorship).",
+      "requirements": "Pursuing a Computer Science, Computer Engineering, or related technical degree as an undergraduate student.",
+      "required_skills": [
+        "Computer Science",
+        "Python",
+        "Java",
+        "C++",
+        "Problem Solving"
+      ],
+      "eligibility": "Open to eligible students and early-career candidates.",
+      "location": "Not specified / Check link",
+      "deadline": "Rolling / Check source link",
+      "opportunity_type": "Opportunity",
+      "tags": [
+        "Scholarship",
+        "Google",
+        "Women in Tech",
+        "Computer Science"
+      ],
+      "created_at": "2026-09-28T05:59:21.325Z"
+    },
+    {
+      "id": 13,
+      "user_id": 5,
+      "title": "Amazon ML Summer School 2026",
+      "url": "https://www.amazon.science/academic-engagement/amazon-ml-summer-school",
+      "organization": "Amazon Science",
+      "description": "In-depth machine learning training modules taught by Amazon ML scientists with direct interview opportunities for ML roles.",
+      "requirements": "Enrolled in 3rd/4th year B.Tech, M.Tech, or MCA degree in Computer Science/AI.",
+      "required_skills": [
+        "Machine Learning",
+        "Python",
+        "Deep Learning",
+        "SQL"
+      ],
+      "eligibility": "Open to eligible students",
+      "location": "Check source URL",
+      "deadline": "Check source URL",
+      "opportunity_type": "Opportunity",
+      "tags": [
+        "Amazon",
+        "Machine Learning",
+        "Mentorship",
+        "AI"
+      ],
+      "created_at": "2026-09-28T05:59:45.183Z"
+    },
+    {
+      "id": 14,
+      "user_id": 10,
+      "title": "Google Summer of Code Open Source Contributor",
+      "url": "https://summerofcode.withgoogle.com",
+      "organization": "Google Open Source",
+      "description": "Google Summer of Code is a global program focused on bringing more developers into open source software development.",
+      "requirements": "See opportunity link for full prerequisites and requirements.",
+      "required_skills": [
+        "Python",
+        "JavaScript",
+        "Git",
+        "Open Source"
+      ],
+      "eligibility": "Open to eligible students and early-career candidates.",
+      "location": "Remote / Online",
+      "deadline": "Rolling / Check source link",
+      "opportunity_type": "Opportunity",
+      "tags": [
+        "Opportunity"
+      ],
+      "created_at": "2026-09-28T06:10:28.863Z"
     }
   ],
   "recommendations": [
@@ -772,6 +929,195 @@
       "recommendation": "Recommended with preparation. Spend time brushing up on missing skills before submitting your application.",
       "reason": "Calculated from a 50% skill match, 80% interest alignment, and strong career goal compatibility.",
       "created_at": "2026-09-27T18:43:46.896Z"
+    },
+    {
+      "id": 10,
+      "user_id": 9,
+      "opportunity_id": 11,
+      "title": "Google Summer of Code Open Source Contributor",
+      "match_score": 68,
+      "summary": "This opportunity at Google Open Source matches 68% of your profile criteria.",
+      "matching_skills": [
+        "Python",
+        "Javascript"
+      ],
+      "missing_skills": [
+        "Git",
+        "Open source"
+      ],
+      "matching_interests": [
+        "Open Source"
+      ],
+      "education_match": "Your education background (B.Tech Computer Science, 3rd Year) is well-suited for this Opportunity.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"Full-Stack AI Engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Strong foundation in: Python, Javascript",
+        "High domain interest in: Open Source"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Git, Open source"
+      ],
+      "recommendation": "Recommended with preparation. Spend time brushing up on missing skills before submitting your application.",
+      "reason": "Calculated from a 50% skill match, 80% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T05:44:13.891Z"
+    },
+    {
+      "id": 11,
+      "user_id": 5,
+      "opportunity_id": 7,
+      "title": "relience",
+      "match_score": 37,
+      "summary": "This opportunity at testing matches 37% of your profile criteria.",
+      "matching_skills": [],
+      "missing_skills": [
+        "Javascript",
+        "Go"
+      ],
+      "matching_interests": [],
+      "education_match": "Your education background (btech  computer science , 1st year) is well-suited for this Scholarship / Grant.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"rage engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Broad foundational technical readiness",
+        "Eagerness to explore new project areas"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Javascript, Go"
+      ],
+      "recommendation": "Consider as a stretch goal. Review prerequisites carefully to verify eligibility.",
+      "reason": "Calculated from a 0% skill match, 60% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T05:45:30.293Z"
+    },
+    {
+      "id": 12,
+      "user_id": 5,
+      "opportunity_id": 7,
+      "title": "relience",
+      "match_score": 37,
+      "summary": "This opportunity at testing matches 37% of your profile criteria.",
+      "matching_skills": [],
+      "missing_skills": [
+        "Javascript",
+        "Go"
+      ],
+      "matching_interests": [],
+      "education_match": "Your education background (btech  computer science , 1st year) is well-suited for this Scholarship / Grant.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"rage engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Broad foundational technical readiness",
+        "Eagerness to explore new project areas"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Javascript, Go"
+      ],
+      "recommendation": "Consider as a stretch goal. Review prerequisites carefully to verify eligibility.",
+      "reason": "Calculated from a 0% skill match, 60% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T05:59:07.422Z"
+    },
+    {
+      "id": 13,
+      "user_id": 5,
+      "opportunity_id": 12,
+      "title": "Google Generation Scholarship (APAC)",
+      "match_score": 39,
+      "summary": "This opportunity at Google Education matches 39% of your profile criteria.",
+      "matching_skills": [],
+      "missing_skills": [
+        "Computer science",
+        "Python",
+        "Java",
+        "C++",
+        "Problem solving"
+      ],
+      "matching_interests": [],
+      "education_match": "Your education background (btech  computer science , 1st year) is well-suited for this Opportunity.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"rage engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Broad foundational technical readiness",
+        "Eagerness to explore new project areas"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Computer science, Python, Java, C++, Problem solving"
+      ],
+      "recommendation": "Consider as a stretch goal. Review prerequisites carefully to verify eligibility.",
+      "reason": "Calculated from a 0% skill match, 60% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T05:59:21.332Z"
+    },
+    {
+      "id": 14,
+      "user_id": 5,
+      "opportunity_id": 13,
+      "title": "Amazon ML Summer School 2026",
+      "match_score": 37,
+      "summary": "This opportunity at Amazon Science matches 37% of your profile criteria.",
+      "matching_skills": [],
+      "missing_skills": [
+        "Machine learning",
+        "Python",
+        "Deep learning",
+        "Sql"
+      ],
+      "matching_interests": [],
+      "education_match": "Your education background (btech  computer science , 1st year) is well-suited for this Opportunity.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"rage engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students"
+      ],
+      "strengths": [
+        "Broad foundational technical readiness",
+        "Eagerness to explore new project areas"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Machine learning, Python, Deep learning, Sql"
+      ],
+      "recommendation": "Consider as a stretch goal. Review prerequisites carefully to verify eligibility.",
+      "reason": "Calculated from a 0% skill match, 60% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T05:59:45.188Z"
+    },
+    {
+      "id": 15,
+      "user_id": 10,
+      "opportunity_id": 14,
+      "title": "Google Summer of Code Open Source Contributor",
+      "match_score": 68,
+      "summary": "This opportunity at Google Open Source matches 68% of your profile criteria.",
+      "matching_skills": [
+        "Python",
+        "Javascript"
+      ],
+      "missing_skills": [
+        "Git",
+        "Open source"
+      ],
+      "matching_interests": [
+        "Open Source"
+      ],
+      "education_match": "Your education background (B.Tech Computer Science, 3rd Year) is well-suited for this Opportunity.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"Full-Stack AI Engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Strong foundation in: Python, Javascript",
+        "High domain interest in: Open Source"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Git, Open source"
+      ],
+      "recommendation": "Recommended with preparation. Spend time brushing up on missing skills before submitting your application.",
+      "reason": "Calculated from a 50% skill match, 80% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-28T06:10:28.867Z"
     }
   ],
   "feedback": [
@@ -837,6 +1183,24 @@
       "rating": 5,
       "comment": "Excellent matching precision!",
       "created_at": "2026-09-27T18:43:46.901Z"
+    },
+    {
+      "id": 8,
+      "user_id": 9,
+      "opportunity_id": 11,
+      "recommendation_id": 10,
+      "rating": 5,
+      "comment": "Excellent matching precision!",
+      "created_at": "2026-09-28T05:44:13.902Z"
+    },
+    {
+      "id": 9,
+      "user_id": 10,
+      "opportunity_id": 14,
+      "recommendation_id": 15,
+      "rating": 5,
+      "comment": "Excellent matching precision!",
+      "created_at": "2026-09-28T06:10:28.873Z"
     }
   ]
 }

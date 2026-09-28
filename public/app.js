@@ -7,6 +7,15 @@ const { useState, useEffect } = React;
 // API Helpers
 const API_BASE = "";
 
+const ensureAbsoluteUrl = (url) => {
+  if (!url) return "#";
+  const trimmed = String(url).trim();
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+  return `https://${trimmed}`;
+};
+
 const COURSE_OPTIONS = [
   "B.Tech / B.E. Computer Science & Engineering",
   "B.Tech / B.E. Information Technology",
@@ -132,6 +141,61 @@ function App() {
   const [discoveredOpps, setDiscoveredOpps] = useState([]);
   const [discoveryCategory, setDiscoveryCategory] = useState("all");
   const [importingId, setImportingId] = useState(null);
+
+  // Theme State
+  const [currentTheme, setCurrentTheme] = useState(localStorage.getItem("theme") || "theme-dark");
+
+  useEffect(() => {
+    document.body.className = currentTheme;
+    localStorage.setItem("theme", currentTheme);
+  }, [currentTheme]);
+
+  // Calculate Student Overall Ability Percentage
+  const calculateAbilityPercentage = () => {
+    if (!profile) return 50;
+    const skillsCount = (profile.skills || []).length;
+    const interestsCount = (profile.interests || []).length;
+    const hasEdu = profile.education ? 20 : 0;
+    const hasGoals = (profile.career_goals || profile.careerGoals) ? 20 : 0;
+    const skillPoints = Math.min(skillsCount * 8, 40);
+    const interestPoints = Math.min(interestsCount * 5, 20);
+
+    return Math.min(Math.round(hasEdu + hasGoals + skillPoints + interestPoints), 100);
+  };
+
+  // Calculate Preparedness for a specific Opportunity
+  const calculateOpportunityPreparedness = (opp) => {
+    const studentSkills = (profile?.skills || []).map((s) => s.toLowerCase());
+    const requiredSkills = (opp.required_skills || opp.requiredSkills || []).map((s) => s.toLowerCase());
+
+    if (requiredSkills.length === 0) {
+      const score = Math.min(60 + studentSkills.length * 5, 95);
+      return {
+        percentage: score,
+        matchedCount: studentSkills.length,
+        totalRequired: studentSkills.length,
+        matchedSkills: profile?.skills || [],
+        missingSkills: []
+      };
+    }
+
+    const matched = requiredSkills.filter((req) =>
+      studentSkills.some((st) => st.includes(req) || req.includes(st))
+    );
+
+    const percentage = Math.round((matched.length / requiredSkills.length) * 100);
+    return {
+      percentage,
+      matchedCount: matched.length,
+      totalRequired: requiredSkills.length,
+      matchedSkills: (opp.required_skills || opp.requiredSkills || []).filter((s) =>
+        studentSkills.some((st) => st.includes(s.toLowerCase()) || s.toLowerCase().includes(st))
+      ),
+      missingSkills: (opp.required_skills || opp.requiredSkills || []).filter(
+        (s) => !studentSkills.some((st) => st.includes(s.toLowerCase()) || s.toLowerCase().includes(st))
+      )
+    };
+  };
 
   const showToast = (message, type = "success") => {
     setToast({ message, type });
@@ -488,6 +552,12 @@ function App() {
             ✨ AI Matches ({recommendations.length})
           </button>
           <button
+            className={`nav-btn ${activeTab === "summary" ? "active" : ""}`}
+            onClick={() => setActiveTab("summary")}
+          >
+            📈 Ability & Preparedness
+          </button>
+          <button
             className={`nav-btn ${activeTab === "profile" ? "active" : ""}`}
             onClick={() => setActiveTab("profile")}
           >
@@ -499,6 +569,20 @@ function App() {
           >
             ➕ Add URL
           </button>
+
+          {/* THEME SWITCHER */}
+          <select
+            className="form-select"
+            style={{ width: "auto", padding: "6px 10px", fontSize: "12px", cursor: "pointer" }}
+            value={currentTheme}
+            onChange={(e) => setCurrentTheme(e.target.value)}
+          >
+            <option value="theme-dark">🌙 Cyberpunk Dark</option>
+            <option value="theme-ocean">🌊 Deep Ocean</option>
+            <option value="theme-emerald">🌲 Emerald Forest</option>
+            <option value="theme-purple">🔮 Sunset Purple</option>
+            <option value="theme-light">☀️ Clean Light</option>
+          </select>
 
           {user ? (
             <div className="user-badge">
@@ -639,7 +723,7 @@ function App() {
                       {analyzingId === opp.id ? "Analyzing..." : "⚡ AI Match"}
                     </button>
                     <a
-                      href={opp.url}
+                      href={ensureAbsoluteUrl(opp.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-sm btn-secondary"
@@ -710,7 +794,7 @@ function App() {
                         {analyzingId === opp.id ? "Analyzing Match..." : "⚡ Generate AI Match"}
                       </button>
                       <a
-                        href={opp.url}
+                        href={ensureAbsoluteUrl(opp.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-secondary"
@@ -806,7 +890,7 @@ function App() {
                         {importingId === item.id ? "Processing..." : "⚡ 1-Click Import & AI Match"}
                       </button>
                       <a
-                        href={item.url}
+                        href={ensureAbsoluteUrl(item.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-secondary"
@@ -818,6 +902,161 @@ function App() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* TAB 2c: STUDENT ABILITY & PREPAREDNESS SUMMARY */}
+        {activeTab === "summary" && (
+          <div>
+            <h1 className="card-title" style={{ fontSize: "22px" }}>📈 Student Ability & Preparedness Summary</h1>
+            <p className="card-subtitle">
+              Comprehensive report of your technical readiness, skill mastery, and opportunity preparation status.
+            </p>
+
+            {/* Overall Ability Index Header Card */}
+            <div className="card" style={{ marginBottom: "24px", background: "linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.1) 100%)", border: "1px solid rgba(99,102,241,0.3)" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "20px" }}>
+                <div>
+                  <h2 style={{ fontSize: "20px", fontWeight: "800", marginBottom: "6px" }}>
+                    Student Ability Index: <span style={{ color: "#34d399" }}>{calculateAbilityPercentage()}%</span>
+                  </h2>
+                  <p style={{ color: "var(--text-muted)", fontSize: "14px", maxWidth: "600px" }}>
+                    Calculated from your skills ({(profile?.skills || []).length}), course degree stream ({profile?.education || "Specified in profile"}), domain interests ({(profile?.interests || []).length}), and target opportunity requirements.
+                  </p>
+                </div>
+
+                <div className="score-badge-lg score-high" style={{ width: "95px", height: "95px" }}>
+                  <span style={{ fontSize: "28px" }}>{calculateAbilityPercentage()}%</span>
+                  <span style={{ fontSize: "10px" }}>ABILITY</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid for Skills Mastery & Preparedness Table */}
+            <div className="form-row" style={{ marginBottom: "24px" }}>
+              {/* Left Column: Your Technical Skills Mastery */}
+              <div className="card">
+                <h3 className="card-title" style={{ fontSize: "16px", marginBottom: "14px" }}>
+                  🛠️ Your Skill Readiness Breakdown
+                </h3>
+                {(profile?.skills || []).length === 0 ? (
+                  <p style={{ color: "var(--text-dim)", fontSize: "13px" }}>No skills added to your profile yet. Go to Profile tab to add skills!</p>
+                ) : (
+                  (profile.skills || []).map((skill, idx) => {
+                    const oppsNeedingSkill = opportunities.filter((o) =>
+                      (o.required_skills || o.requiredSkills || []).some((s) => s.toLowerCase().includes(skill.toLowerCase()))
+                    ).length;
+
+                    return (
+                      <div key={idx} style={{ marginBottom: "14px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", fontWeight: "600", marginBottom: "4px" }}>
+                          <span>{skill}</span>
+                          <span style={{ color: "#a5b4fc" }}>Mastered ({oppsNeedingSkill} Opps Demand)</span>
+                        </div>
+                        <div className="progress-bar-track">
+                          <div className="progress-bar-fill success" style={{ width: `${Math.min(75 + oppsNeedingSkill * 10, 100)}%` }}></div>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Right Column: AI Career Readiness Insights */}
+              <div className="card">
+                <h3 className="card-title" style={{ fontSize: "16px", marginBottom: "14px" }}>
+                  💡 AI Actionable Skill Roadmap
+                </h3>
+                <div className="recommendation-box" style={{ marginTop: 0 }}>
+                  <div className="rec-section-title">Career Readiness Advice</div>
+                  <p style={{ fontSize: "14px", color: "#f8fafc", marginBottom: "12px" }}>
+                    {calculateAbilityPercentage() >= 75
+                      ? "Your student profile demonstrates high technical readiness! Focus on finalizing your resume and submitting applications early."
+                      : "Adding 2 more core technical skills and linking portfolio projects will significantly boost your opportunity match scores."}
+                  </p>
+                  
+                  <div className="rec-section-title">Most Demanded Skills Across Saved Opportunities</div>
+                  <div className="tags-wrap">
+                    {Array.from(
+                      new Set(
+                        opportunities.flatMap((o) => o.required_skills || o.requiredSkills || [])
+                      )
+                    ).slice(0, 8).map((sk, i) => {
+                      const isMastered = (profile?.skills || []).some((s) => s.toLowerCase().includes(sk.toLowerCase()));
+                      return (
+                        <span key={i} className={`tag ${isMastered ? "tag-success" : "tag-warning"}`}>
+                          {isMastered ? `✓ ${sk}` : `+ Need ${sk}`}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Opportunities Preparedness Detailed List */}
+            <div className="card">
+              <h3 className="card-title" style={{ fontSize: "18px", marginBottom: "16px" }}>
+                🎯 Opportunity Preparedness Breakdown
+              </h3>
+
+              {opportunities.length === 0 ? (
+                <div className="empty-state">
+                  <p>No saved opportunities available yet. Save an opportunity URL to analyze your preparedness!</p>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {opportunities.map((opp) => {
+                    const prep = calculateOpportunityPreparedness(opp);
+                    const statusBadge = prep.percentage >= 75 ? "tag-success" : prep.percentage >= 50 ? "tag-warning" : "tag";
+
+                    return (
+                      <div key={opp.id} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)", borderRadius: "12px", padding: "18px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "10px" }}>
+                          <div>
+                            <h4 style={{ fontSize: "16px", fontWeight: "700" }}>{opp.title}</h4>
+                            <div style={{ fontSize: "13px", color: "var(--text-muted)" }}>🏢 {opp.organization}</div>
+                          </div>
+                          <span className={`tag ${statusBadge}`} style={{ fontSize: "13px", padding: "6px 12px" }}>
+                            ⚡ {prep.percentage}% Prepared
+                          </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="progress-bar-track">
+                          <div className={`progress-bar-fill ${prep.percentage >= 75 ? "success" : prep.percentage >= 50 ? "warning" : ""}`} style={{ width: `${prep.percentage}%` }}></div>
+                        </div>
+
+                        {/* Skills Breakdown */}
+                        <div className="form-row" style={{ marginTop: "12px" }}>
+                          <div>
+                            <div className="rec-section-title">Skills You Master ({prep.matchedSkills.length})</div>
+                            <div className="tags-wrap">
+                              {prep.matchedSkills.length > 0 ? (
+                                prep.matchedSkills.map((s, i) => <span key={i} className="tag tag-success">✓ {s}</span>)
+                              ) : (
+                                <span style={{ color: "var(--text-dim)", fontSize: "12px" }}>None matched yet</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="rec-section-title">Required Skills To Learn ({prep.missingSkills.length})</div>
+                            <div className="tags-wrap">
+                              {prep.missingSkills.length > 0 ? (
+                                prep.missingSkills.map((s, i) => <span key={i} className="tag tag-warning">+ {s}</span>)
+                              ) : (
+                                <span style={{ color: "#34d399", fontSize: "12px" }}>All required skills mastered! 🎉</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
