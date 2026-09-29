@@ -13,6 +13,13 @@
       "password_hash": "$2b$10$VJFqJIkuXKmrU916oYStD.oD653wtqfG70/BEOqkrxi9KkRmKqd/2",
       "name": "Devon Vance",
       "created_at": "2026-09-29T06:36:16.953Z"
+    },
+    {
+      "id": 3,
+      "email": "tester_1790665390810@hackathon.edu",
+      "password_hash": "$2b$10$03juibc0Gd5FI9fn8DDZiuPPW8jKW.qNQ8KcfhE/glGcGeWEurByC",
+      "name": "Devon Vance",
+      "created_at": "2026-09-29T07:03:10.867Z"
     }
   ],
   "profiles": [
@@ -65,6 +72,28 @@
       "location": "Remote / Hybrid",
       "preferred_opportunity_types": [],
       "updated_at": "2026-09-29T06:36:17.016Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "name": "Devon Vance",
+      "education": "B.Tech Computer Science, 3rd Year",
+      "skills": [
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js"
+      ],
+      "interests": [
+        "AI",
+        "Open Source",
+        "Autonomous Vehicles"
+      ],
+      "career_goals": "Full-Stack AI Engineer",
+      "experience": "",
+      "location": "Remote / Hybrid",
+      "preferred_opportunity_types": [],
+      "updated_at": "2026-09-29T07:03:10.928Z"
     }
   ],
   "opportunities": [
@@ -141,6 +170,29 @@
         "Opportunity"
       ],
       "created_at": "2026-09-29T06:36:18.052Z"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "title": "Google Summer of Code Open Source Contributor",
+      "url": "https://summerofcode.withgoogle.com",
+      "organization": "Google Open Source",
+      "description": "Google Summer of Code is a global program focused on bringing more developers into open source software development.",
+      "requirements": "See opportunity link for full prerequisites and requirements.",
+      "required_skills": [
+        "Python",
+        "JavaScript",
+        "Git",
+        "Open Source"
+      ],
+      "eligibility": "Open to eligible students and early-career candidates.",
+      "location": "Remote / Online",
+      "deadline": "Rolling / Check source link",
+      "opportunity_type": "Opportunity",
+      "tags": [
+        "Opportunity"
+      ],
+      "created_at": "2026-09-29T07:03:11.728Z"
     }
   ],
   "recommendations": [
@@ -214,6 +266,40 @@
       "recommendation": "Recommended with preparation. Spend time brushing up on missing skills before submitting your application.",
       "reason": "Calculated from a 50% skill match, 80% interest alignment, and strong career goal compatibility.",
       "created_at": "2026-09-29T06:36:18.056Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "opportunity_id": 4,
+      "title": "Google Summer of Code Open Source Contributor",
+      "match_score": 68,
+      "summary": "This opportunity at Google Open Source matches 68% of your profile criteria.",
+      "matching_skills": [
+        "Python",
+        "Javascript"
+      ],
+      "missing_skills": [
+        "Git",
+        "Open source"
+      ],
+      "matching_interests": [
+        "Open Source"
+      ],
+      "education_match": "Your education background (B.Tech Computer Science, 3rd Year) is well-suited for this Opportunity.",
+      "career_goal_alignment": "Participating directly supports your ambition: \"Full-Stack AI Engineer\".",
+      "eligibility_notes": [
+        "Open to eligible students and early-career candidates."
+      ],
+      "strengths": [
+        "Strong foundation in: Python, Javascript",
+        "High domain interest in: Open Source"
+      ],
+      "gaps": [
+        "Opportunity highlights these skills which are not listed on your profile: Git, Open source"
+      ],
+      "recommendation": "Recommended with preparation. Spend time brushing up on missing skills before submitting your application.",
+      "reason": "Calculated from a 50% skill match, 80% interest alignment, and strong career goal compatibility.",
+      "created_at": "2026-09-29T07:03:11.731Z"
     }
   ],
   "feedback": [
@@ -234,6 +320,15 @@
       "rating": 5,
       "comment": "Excellent matching precision!",
       "created_at": "2026-09-29T06:36:18.062Z"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "opportunity_id": 4,
+      "recommendation_id": 3,
+      "rating": 5,
+      "comment": "Excellent matching precision!",
+      "created_at": "2026-09-29T07:03:11.734Z"
     }
   ]
 }
