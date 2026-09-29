@@ -130,30 +130,74 @@ const initialData = {
   ]
 };
 
+const os = require("os");
+const TMP_DB_FILE = path.join(os.tmpdir(), "opportunity_ai_database.json");
+
+// In-memory store fallback for serverless deployments on read-only filesystems
+let memoryDbStore = null;
+
 // Ensure data folder and database.json exist
 const ensureLocalDb = () => {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), "utf8");
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(DB_FILE)) {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), "utf8");
+    }
+  } catch (err) {
+    // Silently handle read-only file systems (e.g. /var/task on Vercel)
   }
 };
 
 const readLocalDb = () => {
+  // 1. Return in-memory cache if updated during runtime
+  if (memoryDbStore) return memoryDbStore;
+
+  // 2. Try reading from serverless writable /tmp directory
+  try {
+    if (fs.existsSync(TMP_DB_FILE)) {
+      const raw = fs.readFileSync(TMP_DB_FILE, "utf8");
+      memoryDbStore = JSON.parse(raw);
+      return memoryDbStore;
+    }
+  } catch (e) {
+    // Ignore tmp file error
+  }
+
+  // 3. Try reading from project directory data/database.json
   ensureLocalDb();
   try {
-    const raw = fs.readFileSync(DB_FILE, "utf8");
-    return JSON.parse(raw);
+    if (fs.existsSync(DB_FILE)) {
+      const raw = fs.readFileSync(DB_FILE, "utf8");
+      memoryDbStore = JSON.parse(raw);
+      return memoryDbStore;
+    }
   } catch (err) {
-    console.error("Error reading database.json, resetting to initial:", err.message);
-    return initialData;
+    console.warn("Could not read project database.json, falling back to initial data:", err.message);
   }
+
+  memoryDbStore = JSON.parse(JSON.stringify(initialData));
+  return memoryDbStore;
 };
 
 const writeLocalDb = (data) => {
-  ensureLocalDb();
-  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), "utf8");
+  memoryDbStore = data;
+
+  // 1. Try writing to project data/database.json
+  try {
+    ensureLocalDb();
+    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), "utf8");
+    return;
+  } catch (err) {
+    // 2. Fall back to writing to serverless writable /tmp directory on EROFS
+    try {
+      fs.writeFileSync(TMP_DB_FILE, JSON.stringify(data, null, 2), "utf8");
+      console.log("ℹ️ Wrote database changes to serverless /tmp fallback file");
+    } catch (tmpErr) {
+      console.warn("⚠️ Saved changes to in-memory store:", tmpErr.message);
+    }
+  }
 };
 
 // ==========================================
